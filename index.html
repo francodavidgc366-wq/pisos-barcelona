@@ -4,11 +4,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap">
 <style>
 /* Layout (Fotocasa-style): top filter bar, results header with sort, rows with photo left and details right, two columns on wide screens. */
-:root{--bg:#eef3fb;--panel:#fff;--fg:#17202e;--muted:#4f5b6e;--line:#cfd9ea;--accent:#1a56c4;--accent-fg:#fff;--good:#0b7a3e;--good-bg:#d9f2e2;--mid:#8a5a00;--mid-bg:#ffefc2;--bad:#a1281d;--bad-bg:#fbdcd8;--heart:#c4234f;--soft:#e0e8f6;
+:root{--bg:#ffffff;--panel:#fff;--fg:#17202e;--muted:#4f5b6e;--line:#d5dce8;--accent:#1a56c4;--accent-fg:#fff;--good:#0b7a3e;--good-bg:#d9f2e2;--mid:#8a5a00;--mid-bg:#ffefc2;--bad:#a1281d;--bad-bg:#fbdcd8;--heart:#c4234f;--soft:#eef2f9;
 --sans:"Lexend",system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e141d;--panel:#172131;--fg:#eef3fb;--muted:#a9b6c9;--line:#2b384c;--accent:#8ab4ff;--accent-fg:#08203f;--good:#7fe0a7;--good-bg:#17402a;--mid:#ffd36a;--mid-bg:#463813;--bad:#ff9a8f;--bad-bg:#4a2320;--heart:#ff7a9d;--soft:#223045;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e141d;--panel:#172131;--fg:#eef3fb;--muted:#a9b6c9;--line:#2b384c;--accent:#8ab4ff;--accent-fg:#08203f;--good:#7fe0a7;--good-bg:#17402a;--mid:#ffd36a;--mid-bg:#463813;--bad:#ff9a8f;--bad-bg:#4a2320;--heart:#ff7a9d;--soft:#223045;color-scheme:dark}
 *{box-sizing:border-box}
+:root{color-scheme:light}
 body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--sans)}
 .wrap{max-width:1500px;margin:0 auto;padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .fbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:10px;align-items:center}
