@@ -1,58 +1,59 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="only light">
 <title>Pisos Barcelona</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
-/* Layout (Fotocasa-style): top filter bar, results header with sort, rows with photo left and details right, two columns on wide screens. */
-:root{--bg:#ffffff;--panel:#fff;--fg:#17202e;--muted:#4f5b6e;--line:#d5dce8;--accent:#1a56c4;--head:#0f3d91;--accent-fg:#fff;--good:#0b7a3e;--good-bg:#d9f2e2;--mid:#8a5a00;--mid-bg:#ffefc2;--bad:#a1281d;--bad-bg:#fbdcd8;--heart:#c4234f;--soft:#eef2f9;
---sans:"Lexend",system-ui,sans-serif}
+/* Layout: white sticky header with 4 filters, quiet results heading, vertical cards (16:9 photo on top, heart over the photo) in a responsive grid. */
+:root{--bg:#f8fafc;--panel:#fff;--fg:#0f172a;--muted:#64748b;--line:#e2e8f0;--field:#cbd5e1;--soft:#f1f5f9;--accent:#2563eb;--accent-fg:#fff;--accent-soft:#eff6ff;
+--good:#067647;--good-bg:#ecfdf3;--mid:#b54708;--mid-bg:#fffaeb;--bad:#b42318;--bad-bg:#fef3f2;--heart:#e11d48;
+--sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
 *{box-sizing:border-box}
-:root{color-scheme:light}
 body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--sans)}
-.wrap{max-width:1500px;margin:0 auto;padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.fbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--head);border-bottom:0;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.fbar b{font-size:1.3rem;margin-right:8px;color:#fff}
-.pillf{display:flex;flex-direction:column;gap:2px;font-size:.7rem;color:#dbe6ff;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-select{font:inherit;font-size:1rem;font-weight:600;color:var(--fg);background:#fff;border:2px solid #fff;border-radius:10px;padding:8px 12px;min-height:46px;text-transform:none;letter-spacing:0}
-select:focus-visible,.ic:focus-visible,.go:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.favb{font:inherit;font-weight:700;border:2px solid #fff;color:var(--heart);background:#fff;border-radius:10px;min-height:46px;padding:8px 16px;cursor:pointer;align-self:end}
-.favb[aria-pressed=true]{background:var(--heart);color:#fff}
-.hd{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin:16px 0 14px;background:var(--accent);color:#fff;border-radius:12px;padding:12px 18px}
-h1{font-size:1.5rem;line-height:1.2;margin:0;text-wrap:balance}
+.wrap{max-width:1360px;margin:0 auto;padding-block:0 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.fbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(0,0,0,.05);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:14px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:12px 14px;align-items:end}
+.fbar b{font-size:1.25rem;font-weight:700;letter-spacing:-.01em;margin-right:12px;align-self:center}
+.pillf{display:flex;flex-direction:column;gap:4px;font-size:.75rem;font-weight:500;color:var(--muted)}
+select{appearance:none;-webkit-appearance:none;font:inherit;font-size:.95rem;font-weight:500;color:var(--fg);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--field);border-radius:8px;padding:10px 36px 10px 12px;min-height:44px;min-width:150px}
+select:focus-visible,.ic:focus-visible,.go:focus-visible,.favb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.favb{font:inherit;font-weight:500;font-size:.95rem;color:var(--fg);background:#fff;border:1px solid var(--field);border-radius:8px;min-height:44px;padding:0 16px;cursor:pointer}
+.favb[aria-pressed=true]{background:var(--heart);border-color:var(--heart);color:#fff}
+.hd{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:baseline;justify-content:space-between;margin:28px 0 20px}
+h1{font-size:1.5rem;font-weight:700;letter-spacing:-.01em;line-height:1.25;margin:0;text-wrap:balance}
 .legend{display:flex;gap:8px;flex-wrap:wrap}
-.lg{border-radius:999px;padding:3px 12px;font-weight:700;font-size:.85rem}
+.lg{border-radius:999px;padding:3px 10px;font-weight:500;font-size:.78rem}
 .g{background:var(--good-bg);color:var(--good)}.m{background:var(--mid-bg);color:var(--mid)}.r{background:var(--bad-bg);color:var(--bad)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,600px),1fr));gap:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:minmax(150px,42%) minmax(0,1fr);min-width:0}
-.pic{background:var(--soft);display:flex;align-items:center;justify-content:center;position:relative;min-height:190px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
+.card{background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.05),0 2px 4px -1px rgba(0,0,0,.03);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.pic{aspect-ratio:16/9;background:var(--soft);display:flex;align-items:center;justify-content:center;position:relative}
 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.pic svg{width:34%;opacity:.3}
-.pill{position:absolute;left:8px;top:8px;border-radius:999px;padding:3px 11px;font-weight:700;font-size:.82rem}
-.body{padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
-.price{font-size:1.7rem;font-weight:700;line-height:1.1;background:var(--soft);color:var(--head);padding:6px 12px;border-radius:8px;align-self:flex-start}
-.price small{font-size:.85rem;font-weight:400;color:var(--muted)}
-.where{font-weight:600;overflow-wrap:anywhere}
-.sub{color:var(--muted);font-size:.88rem;overflow-wrap:anywhere}
-.facts{display:flex;gap:14px;flex-wrap:wrap;font-weight:600}
-.facts span{display:flex;align-items:center;gap:5px}
-.facts svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.home{background:var(--accent);color:var(--accent-fg);border-radius:6px;padding:1px 9px;font-size:.82rem;align-self:flex-start;font-weight:700}
-.row{display:flex;gap:8px;margin-top:auto;padding-top:6px;align-items:center;flex-wrap:wrap}
-.go{background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:700;border-radius:10px;padding:10px 18px;min-height:46px;display:flex;align-items:center}
-.ic{background:var(--soft);border:2px solid transparent;border-radius:10px;min-width:46px;min-height:46px;font-size:1.4rem;cursor:pointer;line-height:1;color:var(--fg)}
-.ic[aria-pressed=true]{color:var(--heart);border-color:var(--heart)}
-.nope{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:.88rem;margin-left:auto}
-.empty{grid-column:1/-1;text-align:center;padding:40px 14px;background:var(--panel);border:2px dashed var(--line);border-radius:12px}
-.tips{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.tips{overflow:hidden}
-.tips h2{margin:-16px -18px 12px;padding:12px 18px;font-size:1.1rem;background:var(--head);color:#fff}
-.tips ul{margin:0;padding-left:1.2em;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:4px 24px}
-.note{margin-top:14px;color:var(--muted);font-size:.85rem;max-width:90ch}
-@media(max-width:560px){.card{grid-template-columns:1fr}.pic{aspect-ratio:16/10}.fbar b{width:100%}}
+.pic>svg{width:22%;color:#94a3b8}
+.pill{position:absolute;left:10px;bottom:10px;border-radius:999px;padding:3px 10px;font-weight:500;font-size:.78rem}
+.ic{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#475569;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.ic[aria-pressed=true]{color:var(--heart)}.ic[aria-pressed=true] svg{fill:currentColor}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
+.price{font-size:1.6rem;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.price small{font-size:.85rem;font-weight:400;color:var(--muted);letter-spacing:0}
+.where{font-weight:600;overflow-wrap:anywhere;margin-top:2px}
+.sub{color:var(--muted);font-size:.875rem;overflow-wrap:anywhere}
+.facts{display:flex;gap:18px;flex-wrap:wrap;font-weight:500;font-size:.9rem;color:#334155;margin-top:4px}
+.facts span{display:flex;align-items:center;gap:6px}
+.facts svg{width:20px;height:20px;fill:none;stroke:#64748b;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.home{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:500;align-self:flex-start}
+.row{display:flex;gap:12px;margin-top:auto;padding-top:12px;align-items:center}
+.go{flex:1;text-align:center;color:var(--accent);background:#fff;border:1px solid var(--accent);text-decoration:none;font-weight:600;border-radius:8px;padding:10px 14px;min-height:44px;display:flex;align-items:center;justify-content:center}
+.go:hover{background:var(--accent-soft)}
+.nope{background:none;border:0;color:var(--muted);cursor:pointer;font:inherit;font-size:.85rem;text-decoration:underline;padding:0}
+.empty{grid-column:1/-1;text-align:center;padding:48px 16px;background:#fff;border:1px dashed var(--field);border-radius:12px;color:var(--muted)}
+.tips{margin-top:40px;background:#fff;border-radius:12px;box-shadow:0 4px 6px -1px rgba(0,0,0,.05);padding:22px 24px}
+.tips h2{margin:0 0 12px;font-size:1.05rem;font-weight:600}
+.tips ul{margin:0;padding-left:1.2em;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px 28px;color:#334155}
+.note{margin-top:20px;color:var(--muted);font-size:.8rem;max-width:90ch}
+@media(max-width:560px){.fbar b{width:100%}.pillf{flex:1 1 140px}select{width:100%}}
 </style>
 <div class="wrap">
 <div class="fbar" role="search">
-<b>Pisos</b>
+<b>Pisos Barcelona</b>
 <label class="pillf">Precio máximo<select id="price"><option value="900">Hasta 900 €</option><option value="1100" selected>Hasta 1.100 €</option><option value="1300">Hasta 1.300 €</option><option value="1500">Hasta 1.500 €</option></select></label>
 <label class="pillf">Habitaciones<select id="rooms"><option value="1">Cualquiera</option><option value="2" selected>2 o más</option><option value="3">3 o más</option></select></label>
 <label class="pillf">Zona<select id="zone"></select></label>
@@ -61,7 +62,7 @@ h1{font-size:1.5rem;line-height:1.2;margin:0;text-wrap:balance}
 <label class="pillf" style="margin-left:auto">Ordenar<select id="sort"><option value="best">Mejor relación</option><option value="price">Precio más bajo</option><option value="m2">Más grandes</option></select></label>
 </div>
 <div class="hd"><h1><span id="count"></span> en alquiler en Barcelona</h1>
-<div class="legend"><span class="lg g">Barato ≤ 900 €</span><span class="lg m">Precio medio ≤ 1.100 €</span><span class="lg r">Caro</span></div></div>
+<div class="legend"><span class="lg g">Barato · hasta 900 €</span><span class="lg m">Precio medio · hasta 1.100 €</span><span class="lg r">Caro</span></div></div>
 <div class="grid" id="grid"></div>
 <section class="tips"><h2>Qué preguntar antes de ir a verlo</h2><ul>
 <li>¿El contrato es de larga duración? (que no sea de temporada)</li>
@@ -90,12 +91,13 @@ $('zone').onchange=e=>{S.zone=e.target.value;render()};
 const BED='<svg viewBox="0 0 24 24"><path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/></svg>';
 const SQ='<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h4M4 14h4M9 20v-4M14 20v-4"/></svg>';
 const HOUSE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg>';
+const HEART='<svg viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-11A4.6 4.6 0 0 1 12 6.6 4.6 4.6 0 0 1 20 9.5c0 6.1-8 11-8 11z"/></svg>';
 const LV={g:'Barato',m:'Precio medio',r:'Caro'};
 function render(){
  const L=D.filter(d=>S.favOnly?fav.has(d.url):d.price<=S.max&&d.rooms>=S.rooms&&(!S.zone||d.zone===S.zone)&&(S.view==='hid'?hid.has(d.url):!hid.has(d.url))).sort((a,b)=>S.sort==='price'?a.price-b.price:S.sort==='m2'?b.m2-a.m2:a.score-b.score);
  $('favbtn').textContent='♥ Mis favoritos ('+fav.size+')';$('favbtn').setAttribute('aria-pressed',S.favOnly);
  $('count').textContent=L.length+(L.length===1?' piso':' pisos');
- $('grid').innerHTML=L.length?L.map(d=>`<article class="card"><div class="pic">${IMG[d.url]?`<img src="${IMG[d.url]}" alt="" loading="lazy">`:HOUSE}<span class="pill ${d.lvl}">${LV[d.lvl]}</span></div><div class="body"><div class="price">${d.price.toLocaleString("es-ES")} € <small>al mes</small></div><div><div class="where">${esc(d.neighborhood.replace(/\s*\(Distrito[^)]*\)/,'').replace(/, Barcelona$/,''))}</div><div class="sub">${esc(d.zone)}</div></div>${d.zone==='Sant Andreu'?'<span class="home">Cerca de tu casa</span>':''}<div class="facts"><span>${BED}${d.rooms} hab.</span><span>${SQ}${d.m2} m²</span></div><div class="row"><a class="go" href="${esc(d.url)}" target="_blank" rel="noopener">Ver el piso</a><button class="ic" data-a="fav" data-u="${esc(d.url)}" aria-pressed="${fav.has(d.url)}" aria-label="Me gusta">${fav.has(d.url)?'♥':'♡'}</button><button class="nope" data-a="hid" data-u="${esc(d.url)}">${hid.has(d.url)?'Volver a mostrar':'No me interesa'}</button></div></div></article>`).join(''):'<div class="empty">${S.favOnly?"<b>Todavía no has guardado ningún piso.</b><br>Pulsa el corazón en los que te gusten.":"<b>No hay pisos con estas opciones.</b><br>Prueba con un presupuesto más alto o con menos habitaciones."}</div>';
+ $('grid').innerHTML=L.length?L.map(d=>`<article class="card"><div class="pic">${IMG[d.url]?`<img src="${IMG[d.url]}" alt="" loading="lazy">`:HOUSE}<span class="pill ${d.lvl}">${LV[d.lvl]}</span><button class="ic" data-a="fav" data-u="${esc(d.url)}" aria-pressed="${fav.has(d.url)}" aria-label="Guardar en favoritos">${HEART}</button></div><div class="body"><div class="price">${d.price.toLocaleString("es-ES")} € <small>/ mes</small></div><div><div class="where">${esc(d.neighborhood.replace(/\s*\(Distrito[^)]*\)/,'').replace(/, Barcelona$/,''))}</div><div class="sub">${esc(d.zone)}</div></div>${d.zone==='Sant Andreu'?'<span class="home">Cerca de tu casa</span>':''}<div class="facts"><span>${BED}${d.rooms} hab.</span><span>${SQ}${d.m2} m²</span></div><div class="row"><a class="go" href="${esc(d.url)}" target="_blank" rel="noopener">Ver el piso</a><button class="nope" data-a="hid" data-u="${esc(d.url)}">${hid.has(d.url)?'Mostrar':'No me interesa'}</button></div></div></article>`).join(''):'<div class="empty">${S.favOnly?"<b>Todavía no has guardado ningún piso.</b><br>Pulsa el corazón en los que te gusten.":"<b>No hay pisos con estas opciones.</b><br>Prueba con un presupuesto más alto o con menos habitaciones."}</div>';
 }
 $('grid').onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;const u=b.dataset.u,s=b.dataset.a==='fav'?fav:hid;s.has(u)?s.delete(u):s.add(u);sv(b.dataset.a,s);render()};
 render();
