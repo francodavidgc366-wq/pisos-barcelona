@@ -84,9 +84,29 @@ h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margi
 @media(min-width:821px){.fields{display:contents}}
 @media(max-width:430px){.fl{display:none}.brand{font-size:1.1rem}}
 .who{margin:0 0 14px;color:var(--text-muted,#64748b);font-size:.95rem}.who a{color:var(--primary);font-weight:600}
-dialog{border:0;border-radius:16px;padding:24px;width:min(92vw,380px);box-shadow:0 20px 60px rgba(0,0,0,.25)}dialog::backdrop{background:rgba(15,23,42,.5)}
-dialog h2{margin:0 0 4px}dialog p{margin:0 0 14px;color:#64748b}#dform input{display:block;width:100%;box-sizing:border-box;height:48px;margin-bottom:10px;padding:0 14px;border:1px solid var(--border-color);border-radius:10px;font:inherit}
-#dform .row{display:flex;gap:8px;flex-wrap:wrap}#msg{color:#b91c1c;min-height:1.2em;margin:0 0 8px}
+dialog{border:0;padding:0;background:#fff;color:var(--text-main);border-radius:20px;width:min(92vw,420px);max-height:92vh;overflow:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(0,0,0,.5);backdrop-filter:blur(4px)}
+dialog[open]{animation:pop .22s ease}@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}}
+.box{position:relative;padding:28px 26px 26px}.grab{display:none}
+.x{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#94a3b8;font-size:1.05rem;cursor:pointer}.x:hover{background:var(--soft);color:var(--text-main)}
+.box h2{margin:0 36px 4px 0;font-size:1.45rem;letter-spacing:-.02em}.sub2{margin:0 0 18px;color:#64748B;font-size:.95rem}
+.tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:18px}
+.tabs button{position:relative;z-index:1;border:0;background:none;font:inherit;font-weight:600;font-size:.95rem;color:#64748B;height:40px;cursor:pointer;transition:color .2s}.tabs button.on{color:var(--text-main)}
+.ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);background:#fff;border-radius:9px;box-shadow:0 1px 3px rgba(15,23,42,.15);transition:transform .25s ease}
+.tabs.up .ind{transform:translateX(100%)}
+#dform .f{margin-bottom:12px}#dform label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px}
+#dform input{display:block;width:100%;box-sizing:border-box;height:48px;padding:0 14px;border:1px solid #CBD5E1;border-radius:10px;font:inherit;background:#fff;color:var(--text-main);transition:border-color .2s,box-shadow .2s}
+#dform input:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.15)}#dform .bad input{border-color:#DC2626}
+.pwr{position:relative}.pwr input{padding-right:48px}.eye{position:absolute;right:4px;top:4px;width:40px;height:40px;border:0;background:none;font-size:1.1rem;cursor:pointer;opacity:.75}
+.err{display:none;color:#DC2626;font-size:.82rem;margin-top:5px}.bad .err{display:block}
+#dform .f.up{display:none}#dform.up .f.up{display:block;animation:fade .25s ease}@keyframes fade{from{opacity:0;transform:translateY(-6px)}}
+.box-err{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:#FEF2F2;color:#B91C1C;font-size:.9rem}
+.go{width:100%;justify-content:center;height:50px;margin-top:4px}.go[disabled]{opacity:.7;cursor:wait}
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;margin-right:8px}@keyframes sp{to{transform:rotate(360deg)}}
+.av{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:.8rem;margin-right:6px;vertical-align:middle}
+@media(max-width:560px){dialog{margin:auto 0 0;width:100%;max-width:100%;border-radius:20px 20px 0 0;max-height:94vh}
+ dialog[open]{animation:sheet .3s ease}@keyframes sheet{from{transform:translateY(100%)}}
+ .box{padding:22px 20px calc(24px + env(safe-area-inset-bottom,0px))}.grab{display:block;width:44px;height:5px;border-radius:3px;background:#CBD5E1;margin:-8px auto 16px}.x{width:44px;height:44px}}
 </style>
 <div class="wrap">
 <header class="top">
@@ -109,7 +129,18 @@ dialog h2{margin:0 0 4px}dialog p{margin:0 0 14px;color:#64748b}#dform input{dis
 <div class="hd"><h1><span id="count"></span> en alquiler en Barcelona</h1><span class="hint">Barato hasta 900 €, medio hasta 1.100 €</span></div>
 <p class="who" id="who"></p>
 <div class="grid" id="grid"></div>
-<dialog id="dlg"><form id="dform"><h2>Tu cuenta</h2><p>Con una cuenta tus favoritos se guardan en todos tus aparatos.</p><input id="em" type="email" placeholder="Correo electrónico" autocomplete="email" required><input id="pw" type="password" placeholder="Contraseña (mínimo 6 letras)" autocomplete="current-password" minlength="6" required><p id="msg" role="status"></p><div class="row"><button class="btn pri" value="in">Entrar</button><button class="btn" value="up">Crear cuenta</button><button class="btn" type="button" id="dclose">Cerrar</button></div></form></dialog>
+<dialog id="dlg" aria-labelledby="dtitle"><div class="box"><i class="grab" aria-hidden="true"></i>
+<button class="x" id="dclose" type="button" aria-label="Cerrar">✕</button>
+<h2 id="dtitle">Guarda tus favoritos</h2><p class="sub2">Entra para ver tus pisos favoritos desde cualquier móvil.</p>
+<div class="tabs" role="tablist"><button type="button" role="tab" class="on" data-m="in" aria-selected="true">Iniciar sesión</button><button type="button" role="tab" data-m="up" aria-selected="false">Crear cuenta</button><i class="ind"></i></div>
+<form id="dform" novalidate>
+<div class="f up"><label for="nm">Nombre</label><input id="nm" autocomplete="name" placeholder="Tu nombre"><small class="err" data-for="nm"></small></div>
+<div class="f"><label for="em">Correo electrónico</label><input id="em" type="email" inputmode="email" autocomplete="email" placeholder="tucorreo@ejemplo.com"><small class="err" data-for="em"></small></div>
+<div class="f"><label for="pw">Contraseña</label><div class="pwr"><input id="pw" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres"><button type="button" class="eye" id="eye" aria-label="Mostrar contraseña">👁️</button></div><small class="err" data-for="pw"></small></div>
+<div class="f up"><label for="pw2">Repite la contraseña</label><input id="pw2" type="password" autocomplete="new-password" placeholder="Repite la contraseña"><small class="err" data-for="pw2"></small></div>
+<p class="box-err" id="msg" role="alert" hidden></p>
+<button class="btn pri go" id="dgo" type="submit">Entrar</button>
+</form></div></dialog>
 <section class="tips"><h2>Qué preguntar antes de ir a verlo</h2><ul>
 <li>¿El contrato es de larga duración? (que no sea de temporada)</li>
 <li>¿Cuánto es la fianza y cuántos meses piden por adelantado?</li>
@@ -165,8 +196,8 @@ prep();render();
 // --- Supabase: pisos desde la base de datos + login + favoritos por usuario ---
 const SB=window.supabase&&supabase.createClient('https://guagxsbqdilrgbxetsgw.supabase.co','sb_publishable_KwSpOoGLt5drY5-AZXdw-Q_hUGZldMW');
 let user=null;const ids={};
-const authUI=()=>{$('who').innerHTML=user?`Sesión: <b>${esc(user.email)}</b> · <a href="#" id="out">Salir</a>`:'<a href="#" id="in">Entrar</a> para guardar tus favoritos en todos tus aparatos';
- $('in')&&($('in').onclick=e=>{e.preventDefault();$('dlg').showModal()});$('out')&&($('out').onclick=async e=>{e.preventDefault();await SB.auth.signOut()})};
+const authUI=()=>{$('who').innerHTML=user?`<span class="av">${esc(((user.user_metadata&&user.user_metadata.name)||user.email)[0].toUpperCase())}</span><b>${esc((user.user_metadata&&user.user_metadata.name)||user.email)}</b> · <a href="#" id="out">Salir</a>`:'<a href="#" id="in">Entrar</a> para guardar tus favoritos en todos tus aparatos';
+ $('in')&&($('in').onclick=e=>{e.preventDefault();openDlg()});$('out')&&($('out').onclick=async e=>{e.preventDefault();await SB.auth.signOut()})};
 async function loadPisos(){try{const {data,error}=await SB.from('pisos').select('id,price,rooms,m2,neighborhood,title,url,source,photos').lte('price',1300);
  if(error||!data||!data.length)return;D.length=0;D.push(...data);data.forEach(d=>ids[d.url]=d.id);prep();render()}catch(e){}}
 async function loadFavs(){if(!user)return;const {data}=await SB.from('favoritos').select('piso_id,hidden');if(!data)return;
@@ -178,11 +209,30 @@ async function syncOne(kind,u,on){if(!user||!ids[u])return;
  if(on)await SB.from('favoritos').upsert({piso_id:ids[u],hidden:kind==='hid'});else await SB.from('favoritos').delete().eq('piso_id',ids[u])}
 if(SB){SB.auth.onAuthStateChange(async(_e,ses)=>{user=ses?ses.user:null;authUI();await loadFavs()});
  loadPisos().then(async()=>{const {data}=await SB.auth.getSession();user=data.session?data.session.user:null;authUI();await loadFavs()})}
-$('dform').onsubmit=async e=>{e.preventDefault();const em=$('em').value.trim(),pw=$('pw').value,mode=e.submitter.value;$('msg').textContent='...';
- const {data,error}=mode==='up'?await SB.auth.signUp({email:em,password:pw}):await SB.auth.signInWithPassword({email:em,password:pw});
- if(error){$('msg').textContent=error.message.includes('Invalid login')?'Correo o contraseña incorrectos':error.message;return}
- if(mode==='up'&&!data.session){$('msg').textContent='Revisa tu correo para confirmar la cuenta';return}
- $('msg').textContent='';$('dlg').close()};
-$('dclose').onclick=()=>$('dlg').close();
+const dlg=$('dlg'),form=$('dform'),tabs=dlg.querySelector('.tabs');let mode='in';
+const setMode=m=>{mode=m;form.classList.toggle('up',m==='up');tabs.classList.toggle('up',m==='up');tabs.querySelectorAll('button').forEach(t=>{const on=t.dataset.m===m;t.classList.toggle('on',on);t.setAttribute('aria-selected',on)});
+ $('dgo').textContent=m==='up'?'Crear cuenta':'Entrar';$('pw').autocomplete=m==='up'?'new-password':'current-password';$('dtitle').textContent=m==='up'?'Crea tu cuenta':'Guarda tus favoritos';clearErr()};
+const clearErr=()=>{form.querySelectorAll('.f').forEach(f=>f.classList.remove('bad'));form.querySelectorAll('.err').forEach(e=>e.textContent='');$('msg').hidden=true};
+const bad=(id,t)=>{const f=$(id).closest('.f');f.classList.add('bad');f.querySelector('.err').textContent=t;return false};
+tabs.onclick=e=>{const t=e.target.closest('button');if(t)setMode(t.dataset.m)};
+$('eye').onclick=()=>{const h=$('pw').type==='password';$('pw').type=h?'text':'password';$('eye').textContent=h?'🙈':'👁️';$('eye').setAttribute('aria-label',h?'Ocultar contraseña':'Mostrar contraseña')};
+const openDlg=()=>{clearErr();dlg.showModal();$('em').focus()};
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+let ty=null;dlg.addEventListener('touchstart',e=>{ty=e.target.closest('.grab')?e.touches[0].clientY:null});
+dlg.addEventListener('touchend',e=>{if(ty!==null&&e.changedTouches[0].clientY-ty>60)dlg.close();ty=null});
+form.oninput=e=>e.target.closest('.f')?.classList.remove('bad');
+form.onsubmit=async e=>{e.preventDefault();clearErr();const em=$('em').value.trim(),pw=$('pw').value;let ok=true;
+ if(mode==='up'&&!$('nm').value.trim())ok=bad('nm','Escribe tu nombre');
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em))ok=bad('em','Escribe un correo válido, por ejemplo nombre@correo.com');
+ if(pw.length<6)ok=bad('pw','La contraseña necesita al menos 6 caracteres');
+ if(mode==='up'&&ok&&$('pw2').value!==pw)ok=bad('pw2','Las contraseñas no coinciden');
+ if(!ok)return;
+ const go=$('dgo'),txt=go.textContent;go.disabled=true;go.innerHTML='<span class="spin"></span>'+(mode==='up'?'Creando cuenta...':'Iniciando sesión...');
+ let r;try{r=mode==='up'?await SB.auth.signUp({email:em,password:pw,options:{data:{name:$('nm').value.trim()}}}):await SB.auth.signInWithPassword({email:em,password:pw})}catch(x){r={error:{message:'fetch'}}}
+ go.disabled=false;go.textContent=txt;
+ if(r.error){const m=r.error.message||'';$('msg').textContent=/Invalid login/i.test(m)?'Correo o contraseña incorrectos.':/already|registered/i.test(m)?'Ese correo ya tiene cuenta. Prueba en "Iniciar sesión".':/fetch|network/i.test(m)?'No hay conexión. Inténtalo de nuevo.':m;$('msg').hidden=false;return}
+ if(mode==='up'&&!r.data.session){$('msg').textContent='Revisa tu correo para confirmar la cuenta.';$('msg').hidden=false;return}
+ form.reset();dlg.close()};
+$('dclose').onclick=()=>dlg.close();
 </script>
 </html>
