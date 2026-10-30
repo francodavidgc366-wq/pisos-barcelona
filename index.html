@@ -38,7 +38,7 @@ h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margi
 .card:hover{transform:translateY(-2px)}
 .pic{aspect-ratio:16/9;background:var(--soft);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.pic>svg{width:22%;color:#94A3B8}
+.pic .ph{display:flex;flex-direction:column;align-items:center;gap:.3rem;color:#fff;text-align:center;padding:1rem;position:absolute;inset:0;justify-content:center;background:linear-gradient(135deg,#2563EB,#0EA5E9)}.pic .ph svg{width:3rem;opacity:.9}.pic .ph b{font-size:1.05rem}.pic .ph small{opacity:.85}
 .cnt{position:absolute;left:10px;top:10px;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;border-radius:999px;padding:3px 10px;font-size:.78rem;font-weight:500}
 .fav{position:absolute;right:10px;top:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#475569;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:all .2s ease}
 .fav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
@@ -178,7 +178,8 @@ const SQ='<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="
 const HOUSE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg>';
 const HEART='<svg viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-11A4.6 4.6 0 0 1 12 6.6 4.6 4.6 0 0 1 20 9.5c0 6.1-8 11-8 11z"/></svg>';
 const place=n=>n.replace(/\s*\(Distrito[^)]*\)/,'').replace(/, Barcelona$/,'');
-function slide(d){return d.imgs.length?`<img src="${esc(d.imgs[d.i])}" alt="" referrerpolicy="no-referrer" loading="lazy">`:HOUSE}
+const cover=d=>`<div class="ph">${HOUSE}<b>${esc(place(d.neighborhood))}</b><small>El anunciante no puso fotos</small></div>`;
+function slide(d){return d.imgs.length?`<img src="${esc(d.imgs[d.i])}" alt="" referrerpolicy="no-referrer" loading="lazy">`:cover(d)}
 function render(){
  const L=D.filter(d=>S.favOnly?fav.has(d.url):d.price<=S.max&&d.rooms>=S.rooms&&(!S.zone||d.zone===S.zone)&&(S.view==='hid'?hid.has(d.url):!hid.has(d.url))).sort((a,b)=>S.sort==='price'?a.price-b.price:S.sort==='m2'?b.m2-a.m2:a.score-b.score);
  $('favbtn').innerHTML='♥ <span class="fl">Favoritos </span>('+fav.size+')';$('favbtn').setAttribute('aria-pressed',S.favOnly);
@@ -191,7 +192,7 @@ $('grid').addEventListener('click',e=>{
  const b=e.target.closest('button[data-a]');if(!b)return;const u=b.dataset.u,s=b.dataset.a==='fav'?fav:hid;const k=b.dataset.a,on=!s.has(u);if(on){s.add(u);(k==='fav'?hid:fav).delete(u)}else s.delete(u);sv('fav',fav);sv('hid',hid);render();syncOne(k,u,on);
 });
 $('grid').addEventListener('error',e=>{const im=e.target;if(im.tagName!=='IMG')return;const c=im.closest('.card'),d=byUrl[c.dataset.u];d.imgs.splice(d.i,1);d.i=0;const pic=c.querySelector('.pic');
- if(d.imgs.length){im.src=d.imgs[0];pic.querySelector('.cnt').textContent='1 / '+d.imgs.length;if(d.imgs.length<2)pic.querySelectorAll('.nav').forEach(x=>x.remove())}else{im.remove();pic.querySelector('.cnt')?.remove();pic.querySelectorAll('.nav').forEach(x=>x.remove());pic.insertAdjacentHTML('afterbegin',HOUSE)}},true);
+ if(d.imgs.length){im.src=d.imgs[0];pic.querySelector('.cnt').textContent='1 / '+d.imgs.length;if(d.imgs.length<2)pic.querySelectorAll('.nav').forEach(x=>x.remove())}else{im.remove();pic.querySelector('.cnt')?.remove();pic.querySelectorAll('.nav').forEach(x=>x.remove());pic.insertAdjacentHTML('afterbegin',cover(d))}},true);
 prep();render();
 // --- Supabase: pisos desde la base de datos + login + favoritos por usuario ---
 const SB=window.supabase&&supabase.createClient('https://guagxsbqdilrgbxetsgw.supabase.co','sb_publishable_KwSpOoGLt5drY5-AZXdw-Q_hUGZldMW');
